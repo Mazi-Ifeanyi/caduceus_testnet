@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -20,6 +20,7 @@ import ProgramDropdown from '../dropdowns/ProgramDropdown';
 import AboutDropdown from '../dropdowns/AboutDropdown';
 import DashBoardDropdown from '../dropdowns/DashboardDropdown';
 import { disconnect } from '../store/MetaMaskSlice';
+import { isNull } from '../utils/Util';
 
 
 const EVENTS = 'EVENTS';
@@ -77,7 +78,8 @@ const Header2 = () =>{
     const dashboardRef = useRef();
     const aboutRef = useRef();
     const dispatchRedux = useDispatch();
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const metaSelector = useSelector(state=>state.meta);
 
     const disconnectMetamask = () =>{
         dispatchRedux(disconnect());
@@ -168,7 +170,7 @@ const Header2 = () =>{
                             <p><strong style={{ fontWeight: 'bold'}}>Caduceus</strong> Connected</p>
                         </span>
                         <span className={classes.wallet}>
-                            0xatt3764h366447374...
+                            {!isNull(metaSelector.wallet)? metaSelector.wallet.slice(0,10)+'...'+metaSelector.wallet.slice(-10) : '--'}
                         </span>
                      </div>
                  </div>
@@ -181,16 +183,26 @@ const Header2 = () =>{
                             How to use JobCrypt</button>
                     </div>
                     <div className={classes.bottomLeftContainer}>
-                        <span className={classes.likeContainer}>
-                            <img src={thumbsUpIcon} alt='' />
+                        {metaSelector.isStaked &&<span className={classes.likeContainer}>
+                            <img src={thumbsUpIcon} alt='' className={classes.thumbsIcon} />
                             <p>Staked: <strong>CMP staked to apply for jobs</strong></p>
-                        </span>
-                        <span className={classes.cmpPortion}>
+                        </span>}
+                        {!metaSelector.isStaked &&<span className={classes.likeContainer}>
+                            <img src={thumbsUpIcon} alt='' className={`${classes.thumbsIcon} ${classes.rotate}`} />
+                            <p>Not Staked: <strong>Stake CMP to apply for jobs</strong></p>
+                        </span>}
+                        {metaSelector.isStaked &&<span className={classes.cmpPortion}>
                             <p>Unstake CMP</p>
                             <span className={classes.circle}>
                                 <img src={tree} alt='' />
                             </span>
-                        </span>
+                        </span>}
+                        {!metaSelector.isStaked &&<span className={classes.cmpPortion}>
+                            <p>Stake CMP</p>
+                            <span className={classes.circle}>
+                                <img src={tree} alt='' />
+                            </span>
+                        </span>}
                     </div>
                     
              </section>

@@ -26,13 +26,13 @@ const ConnectMetaMaskPopup = (props) =>{
     
                 let accounts = await window.ethereum.request({method: 'eth_requestAccounts',params: []});
                 console.log(accounts)
-                // if(isNull(accounts[0])){
-                //     setWallet('');
-                //     setButtonStatus('Click to connect to metamask.');
-                // }else{
-                //     setWallet(`Connected Wallet: ${accounts[0]}`);
-                //     setButtonStatus('Web3 Connected!');
-                // }
+                if(isNull(accounts[0])){
+                    sessionStorage.removeItem('wallet');
+                }else{
+                    sessionStorage.setItem('wallet', accounts[0]);
+                    dispatch(connect({ wallet: accounts[0] }));
+                    
+                }
     
               }catch (switchError) {
                 // This error code indicates that the chain has not been added to MetaMask.
@@ -40,8 +40,9 @@ const ConnectMetaMaskPopup = (props) =>{
                   try {
                     await window.ethereum.request({
                       method: 'wallet_addEthereumChain',
-                      params: [networks.sepolia],
+                      params: [networks.optimism],
                     });
+                    console.log('Added ', networks.optimism.chainName);
                   } catch (addError) {
                     // handle "add" error
                   }

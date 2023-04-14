@@ -9,6 +9,7 @@
     background-color: var(--dim-bg);
     padding: 50px 30px;
     margin-bottom: 30px;
+    z-index: 1;
 }
 
 .tableHeader{

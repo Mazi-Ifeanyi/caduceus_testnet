@@ -5,17 +5,27 @@ const MetaSlice = createSlice({
     name: 'meta',
     initialState: {
         isConnected: false,
-        wallet: ''
+        wallet: '',
+        isStaked: false
     },
     reducers:{
         connect(state, action){
+            const payload = action.payload;
             state.isConnected = true;
+            state.wallet = payload.wallet;
         },
-        disconnect(state, action){
+        disconnect(state){
             state.isConnected = false;
+            state.wallet = '';
+        },
+        stake(state){
+            state.isStaked = true;
+        },
+        unstake(state){
+            state.isStaked = false;
         }
     }
 });
 
-export const { connect, disconnect } = MetaSlice.actions;
+export const { connect, disconnect, stake, unstake } = MetaSlice.actions;
 export default MetaSlice.reducer;

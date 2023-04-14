@@ -10,6 +10,7 @@ import SpeakersRoute from './routes/SpeakersRoute';
 import AboutUsRoute from './routes/AboutUsRoute';
 import PostJobRoute from './routes/PostJobRoute';
 import BrowseJobRoute from './routes/BrowseJobRoute';
+import PreviousApplication from './routes/PreviousApplication';
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
           <Route exact path='/about' element={<AboutUsRoute />} />
           <Route exact path='/post-job' element={<PostJobRoute />} />
           <Route exact path='/browse-job' element={<BrowseJobRoute />} />
+          <Route exact path='/previous-application' element={<PreviousApplication />} />
       </Routes>
     </Layout>
   );

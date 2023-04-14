@@ -57,19 +57,19 @@ import PromotionPane from '../components/PromotionPane';
                <li>
                    <div className={classes.jobTop}>Featured Jobs</div>
                    <div className={classes.content}>
-                      <p>Multiple jobs are uploaded on the blockchain by the hour. <a href='#hhh'>Install metamask</a> to view available jobs</p>
+                      <p>Multiple jobs are uploaded on the blockchain by the hour. <a href='https://metamask.io'>Install metamask</a> to view available jobs</p>
                    </div>
                </li>
                <li>
                    <div className={classes.jobTop}>Featured Jobs</div>
                    <div className={classes.content}>
-                      <p>Multiple jobs are uploaded on the blockchain by the hour. <a href='#hhh'>Install metamask</a> to view available jobs</p>
+                      <p>Multiple jobs are uploaded on the blockchain by the hour. <a href='https://metamask.io'>Install metamask</a> to view available jobs</p>
                    </div>
                </li>
                <li>
                    <div className={classes.jobTop}>Featured Jobs</div>
                    <div className={classes.content}>
-                      <p>Multiple jobs are uploaded on the blockchain by the hour. <a href='#hhh'>Install metamask</a> to view available jobs</p>
+                      <p>Multiple jobs are uploaded on the blockchain by the hour. <a href='https://metamask.io'>Install metamask</a> to view available jobs</p>
                    </div>
                </li>
           </ul>

@@ -198,10 +198,14 @@
    column-gap: 10px;
 }
 
-.likeContainer>img{
+.thumbsIcon{
    width: 20px;
    height: 20px;
    filter: invert(1);
+}
+
+.rotate{
+   transform: rotateX(180deg);
 }
 
 .likeContainer>p{
