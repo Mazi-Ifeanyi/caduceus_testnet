@@ -19,7 +19,7 @@ import { useReducer } from 'react';
 import ProgramDropdown from '../dropdowns/ProgramDropdown';
 import AboutDropdown from '../dropdowns/AboutDropdown';
 import DashBoardDropdown from '../dropdowns/DashboardDropdown';
-import { disconnect } from '../store/MetaMaskSlice';
+import { connect, disconnect } from '../store/MetaMaskSlice';
 import { isNull } from '../utils/Util';
 
 
@@ -80,6 +80,8 @@ const Header2 = () =>{
     const dispatchRedux = useDispatch();
     const navigate = useNavigate();
     const metaSelector = useSelector(state=>state.meta);
+
+
 
     const disconnectMetamask = () =>{
         dispatchRedux(disconnect());
