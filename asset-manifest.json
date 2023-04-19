@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/caduceus_testnet/static/css/main.717d9389.css",
-    "main.js": "/caduceus_testnet/static/js/main.d092b947.js",
+    "main.js": "/caduceus_testnet/static/js/main.6a3464ca.js",
     "static/js/787.28f000a3.chunk.js": "/caduceus_testnet/static/js/787.28f000a3.chunk.js",
     "static/media/hero.png": "/caduceus_testnet/static/media/hero.f6228f0ef693c48791d8.png",
     "static/media/corporate_businessman.png": "/caduceus_testnet/static/media/corporate_businessman.1aa2a55014747e385395.png",
@@ -46,11 +46,11 @@
     "static/media/tiktok.png": "/caduceus_testnet/static/media/tiktok.8bb71cc6c1bd4e58530b.png",
     "index.html": "/caduceus_testnet/index.html",
     "main.717d9389.css.map": "/caduceus_testnet/static/css/main.717d9389.css.map",
-    "main.d092b947.js.map": "/caduceus_testnet/static/js/main.d092b947.js.map",
+    "main.6a3464ca.js.map": "/caduceus_testnet/static/js/main.6a3464ca.js.map",
     "787.28f000a3.chunk.js.map": "/caduceus_testnet/static/js/787.28f000a3.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.717d9389.css",
-    "static/js/main.d092b947.js"
+    "static/js/main.6a3464ca.js"
   ]
 }
