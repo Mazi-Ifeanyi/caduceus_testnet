@@ -19,14 +19,12 @@ const ConnectMetaMaskPopup = (props) =>{
     const isConnected = useSelector(state=>state.user.isConnected);
     const address = useSelector(state=>state.user.wallet);
     const dispatch = useDispatch();
-    
-    useEffect(()=>{
-        console.log('....', isConnected)
-    },[isConnected]);
+ 
 
 
     const connectToMetamask = async() =>{
         console.log('Trying to open metamask...')
+        if(window.ethereum){
         try{
             //switch network to sepolia
             await window.ethereum.request({
@@ -52,7 +50,8 @@ const ConnectMetaMaskPopup = (props) =>{
                 // handle "add" error
               }
             }
-        }   
+        } 
+    }  
     }
 
     const navigateAndClose = (path) =>{
