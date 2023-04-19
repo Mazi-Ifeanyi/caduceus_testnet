@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import classes from '../styles/routes/BrowseJobRoute.module.css';
@@ -12,12 +11,11 @@ import BrowseJobs from '../components/BrowseJobs';
 
 
 const BrowseJobRoute = () =>{
-    const [ openPostJob, setOpenPostJob ] = useState(false);
     const navigate = useNavigate();
 
 
     const srollToListings = () =>{
-        document.getElementById('listing').scrollIntoView({ behavior: "smooth" });
+        document.getElementById('browse').scrollIntoView({ behavior: "smooth" });
     }
 
 
@@ -34,7 +32,7 @@ const BrowseJobRoute = () =>{
                 </div>
             </main>
            <PromotionPane />
-            <main className={classes.jobListingParent} id='listing'>
+            <main className={classes.jobListingParent} id='browse'>
             <BrowseJobs />
             </main>
         </section>

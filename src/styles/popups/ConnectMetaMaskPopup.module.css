@@ -59,7 +59,7 @@
 
 .body>p{
     color: #fff;
-    font-family: 'font-light';
+    font-family: 'light';
     font-size: 20px;
 }
 
@@ -78,12 +78,16 @@
     justify-content: center;
     align-items: center;
     column-gap: 5px;
-    font-family: 'font-light';
+    font-family: 'light';
     font-size: 25px;
     padding: 20px 20px;
     border: none;
     border-radius: 10px;
     cursor: pointer;
+}
+
+.metaBtn:hover{
+    background-color: #ebebeb;
 }
 
 .metaBtn>img{
@@ -103,7 +107,7 @@
 
 .successContainer>h1{
     color: #fff;
-    font-family: 'font-bold';
+    font-family: 'bold';
     margin: 0;
     font-size: 2rem;
     margin-top: 20px;
@@ -111,7 +115,7 @@
 
 .successContainer>p{
     color: #dddddd;
-    font-family: 'font-light';
+    font-family: 'light';
     margin: 0;
     font-size: 1rem;
     margin-top: 20px; 
@@ -133,7 +137,7 @@
     justify-content: center;
     align-items: center;
     column-gap: 5px;
-    font-family: 'font-light';
+    font-family: 'light';
     font-size: 25px;
     /* padding: 1rem 1rem; */
     width: 15rem;
@@ -143,6 +147,10 @@
     cursor: pointer; 
 }
 
+.browseBtn:hover{
+    background-image: linear-gradient(to right,#2E2230, #131C33); 
+}
+
 .postBtn{
     background-image: linear-gradient(to right,#131C33, #2E2230);
     color: #fff;
@@ -150,11 +158,57 @@
     justify-content: center;
     align-items: center;
     column-gap: 5px;
-    font-family: 'font-light';
+    font-family: 'light';
     font-size: 25px;
     width: 15rem;
     height: 5rem;
     border: none;
     border-radius: 10px;
     cursor: pointer;   
+}
+
+.postBtn:hover{
+    background-image: linear-gradient(to right,#2E2230, #131C33); 
+}
+
+@media screen and (max-width: 770px) {
+    .box{
+        width: 95%;
+        height: 70vh;
+    }
+    .body{
+        padding: 4rem 10px;
+    }
+    
+    .body>p{
+        text-align: center;
+        width: 100%;
+    }
+
+    .metaBtn{
+        cursor: none;
+    }
+    
+    .jobsBtnContainer{
+        flex-direction: column;
+        -ms-flex-direction: column;
+        row-gap: 20px;
+    }
+
+    .browseBtn{
+        /* width: 10rem; */
+        cursor: none; 
+    }
+    
+    .postBtn{
+        /* width: 10rem; */
+        cursor: none;  
+        border: 2px solid #302044;
+        background-image: unset;
+        background-color: transparent;
+    }
+
+    .successContainer>p{ 
+        text-align: center;
+    }
 }

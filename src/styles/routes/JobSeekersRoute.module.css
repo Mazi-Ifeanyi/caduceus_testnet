@@ -83,7 +83,7 @@
      margin: 0;
      font-size: 40px;
      position: relative;
-     font-family: 'font-bold';
+     font-family: 'bold';
  }
 
  .h3{
@@ -91,14 +91,14 @@
     font-size: 20px;
     position: relative;
     color: #fff;
-    font-family: 'font-bold';
+    font-family: 'bold';
  }
 
  .rightBox>p{
     margin: 0;
     margin-top: 10px;
     font-size: 25px;
-    font-family: 'font-light';
+    font-family: 'light';
     color: #fff;
  }
 
@@ -107,7 +107,7 @@
     margin-top: 20px;
     font-size: 20px;
     font-weight: normal;
-    font-family: 'font-light';
+    font-family: 'light';
  }
 
  .ul{
@@ -116,7 +116,7 @@
 
  .ul>li{
     margin: 10px 0px;
-    font-family: 'font-light';
+    font-family: 'light';
     font-size: 20px;
  }
 
@@ -173,7 +173,7 @@
  }
 
  .benefitContent>p{
-    font-family: 'font-bold';
+    font-family: 'bold';
     margin: 0;
     margin-top: 20px;
     font-size: 15px;
@@ -196,12 +196,12 @@
 
  .awardsContainer>h2{
     font-size: 40px;
-    font-family: 'font-bold';
+    font-family: 'bold';
  }
 
  .awardsContainer>p{
     font-size: 25px;
-    font-family: 'font-light';
+    font-family: 'light';
     width: 100%;
     padding: 0px 20%;
     text-align: center;
@@ -252,7 +252,7 @@
     height: fit-content;
     display: flex;
     padding-top: 20px;
-    font-family: 'font-bold';
+    font-family: 'bold';
     font-size: 20px;
     flex-direction: column;
  }
@@ -263,6 +263,64 @@
     padding: 7px 10px;
     border-radius: 5px;
     border: 0.5px solid #000;
-    font-family: 'font-light';
+    font-family: 'light';
     cursor: pointer;
+ }
+
+ @media screen and (max-width: 770px) {
+   .parent{
+      padding-top: 5rem;
+      padding-left: 10px;
+      padding-right: 2px;
+  }
+
+  .rightBox{
+   min-width: 100%;
+   max-width: 100%;
+   padding-right: 5px;
+   padding-left: 10px;
+}
+
+.rightBox>h2{
+   font-size: 30px;
+}
+
+.leftBox{
+   min-width: 100%;
+   max-width: 100%;
+   padding-left: 10px;
+   padding-right: 10px;
+}
+
+.image{
+   width: 100%;
+   height: 100%;
+ }
+  
+ .benefitIconBox{
+   width: 50px;
+   display: flex;
+}
+
+ .benefitList{
+   min-width: 100%;
+   max-width: 100%;
+}
+
+.awardsContainer>p{
+   padding: 0px 10px;
+}
+
+.supportContainer{
+   flex-direction: column;
+   -ms-flex-direction: column;
+   row-gap: 50px;
+   padding: 0px 20px;
+}
+
+.supportContainer>div{
+   min-width: 100%;
+   max-width: 100%;
+   row-gap: 20px;
+}
  }

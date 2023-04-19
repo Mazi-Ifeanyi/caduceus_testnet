@@ -33,14 +33,14 @@
     background-color: var(--dim-bg);
     border-radius: 10px;
     padding-right: 50px;
-    font-family: 'font-light';
+    font-family: 'light';
     font-size: 20px;
     padding-right: 50px;
     padding-left: 10px;
 }
 
 .input::placeholder{
-    font-family: 'font-light';
+    font-family: 'light';
     font-size: 20px;
     padding: 0px 10px;
     color: #000;
@@ -70,7 +70,7 @@
     height: 50px;
     border: none;
     color: #fff;
-    font-family: 'font-light';
+    font-family: 'light';
     font-size: 20px;
     border: 1px solid #c4c4c4;
     border-radius: 10px;
@@ -100,9 +100,8 @@
 
 .selectorContainer>p{
     font-size: 20px;
-    font-family: 'font-light';
-    color: #fff;
-    
+    font-family: 'light';
+    color: #fff; 
 }
 
 .dropdown{
@@ -132,7 +131,7 @@
 
 .selectorContainer2>p{
     font-size: 20px;
-    font-family: 'font-light';
+    font-family: 'light';
     color: #000;
     
 }
@@ -149,40 +148,46 @@
     justify-content: center;
     align-items: center;
     padding-top: 30px;
+    padding-left: 10%;
+    padding-right: 10%;
 }
 
 .allJobsBlack{
-    width: 80%;
+    min-width: 100%;
     height: fit-content;
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
     border-radius: 20px;
     background-color: #4b4b4b62;
-    padding: 10px 0px;
+    padding: 20px 0px;
+    margin-bottom: 20px;
 }
 
 .leftSide{
     min-width: 40%;
+    min-width: 500px;
     height: 100%;
+    max-height: 700px;
     display: flex;
     flex-direction: column;
     -ms-flex-direction: column;
     padding: 0px 20px;
-    /* background-color: red; */
 }
 
+
 .rightSide{
-    min-width: calc(100% - 40%);
+    min-width: calc(100% - 500px);
     height: 100%;
+    max-height: 700px;
     display: flex;
     flex-direction: column;
     -ms-flex-direction: column;
     padding-right: 20px;
     box-sizing: border-box;
-    /* background-color: green; */
     padding-bottom: 10px;
 }
+
 
 .top{
     width: 100%;
@@ -192,6 +197,33 @@
     align-items: center;
     padding: 0px 10px;
 }
+
+.backwardIconContainer{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   padding-left: 5px;
+}
+
+
+.backIcon{
+   width: 18px;
+   height: 18px;
+   filter: invert(1);
+}
+
+/* .centerDetail{
+  width: 100%;
+  max-height: (700px - 70px);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  -ms-flex-direction: column;
+} */
+
+/* .centerDetail::-webkit-scrollbar{
+    width: 5px;
+} */
 
 .nav{
     width: 100%;
@@ -213,7 +245,7 @@
     border-radius: 5px;
     border: 2px solid #2E2230;
     padding: 6px 10px;
-    font-family: 'font-light';
+    font-family: 'light';
     font-size: 15px;
     cursor: pointer;
 }
@@ -226,6 +258,8 @@
 .unorderedList{
     width: 100%;
     height: fit-content;
+    max-height: calc(700px - 70px);
+    overflow-y: auto;
     display: flex;
     flex-direction: column;
     -ms-flex-direction: column;
@@ -234,6 +268,10 @@
     list-style: none;
     padding: 10px 5px;
     row-gap: 5px;
+}
+
+.unorderedList::-webkit-scrollbar{
+    /* width: 5px; */
 }
 
 .unorderedList>li{
@@ -274,21 +312,21 @@
 
 
 .jobTitle{
-    font-family: 'font-bold';
+    font-family: 'bold';
     font-size: 25px;
     margin: 0;
     color: #212121;
 }
 
 .name{
-    font-family: 'font-bold';
+    font-family: 'bold';
     font-size: 15px;
     margin: 0;
     color: #212121;   
 }
 
 .locationTxt{
-    font-family: 'font-light';
+    font-family: 'light';
     font-size: 12px;
     margin: 0;
     color: #212121; 
@@ -313,16 +351,17 @@
 .smallCircle>img{
     width: 15px;
     height: 15px;
-    transform: rotate(90deg);
+    transform: rotate(180deg);
 }
 
 .jobCount{
     width: 100%;
-    text-align: end;
-    font-family: 'font-light';
-    font-size: 18px;
+    text-align: start;
+    font-family: 'light';
+    font-size: 11px;
     color: #b4b4b4;
-    padding-right: 10px;
+    padding-left: 10px;
+    margin: 0;
 }
 
 .jobTitleColored{
@@ -350,7 +389,7 @@
 
 .jobTitleColoredDivLeft>h1{
     margin: 0;
-    font-family: 'font-bold';
+    font-family: 'bold';
     color: #fff;
     font-size: 25px;
 }
@@ -375,7 +414,7 @@
 }
 
 .jobTitleNameContainer>p{
-    font-family: 'font-bold';
+    font-family: 'bold';
     font-size: 18px;
     margin: 0;;
 }
@@ -392,7 +431,7 @@
 .jobTitleColoredDivRight>p{
     color: red;
     font-size: 15px;
-    font-family: 'font-light';
+    font-family: 'light';
     cursor: pointer;
 }
 
@@ -402,7 +441,7 @@
     border-radius: 10px;
     margin-top: 20px;
     color: #fff;
-    font-family: 'font-light';
+    font-family: 'light';
     font-size: 20px;
     position: relative;
     cursor: pointer;
@@ -434,6 +473,7 @@
     background-color: var(--dim-bg);
     border-radius: 0px 0px 20px 20px;
     box-sizing: border-box;
+    overflow-y: auto;
 }
 
 .shortDescriptionSection{
@@ -465,7 +505,7 @@
 }
 
 .shortDescriptionSection>span>p{
-    font-family: 'font-light';
+    font-family: 'light';
     font-size: 18px;
     color: #000;
     margin: 0;
@@ -481,7 +521,7 @@
 .skillContainer>p{
     border-radius: 5px;
     padding: 3px 5px;
-    font-family: 'font-light';
+    font-family: 'light';
     font-size: 12px;
     margin: 0;
     border: 1px solid #373737;
@@ -498,14 +538,14 @@
 }
 
 .aboutJobDescriptionContainer>h1{
-    font-family: 'font-bold';
+    font-family: 'bold';
     font-size: 25px;
     margin: 0;
     margin-top: 30px;
 }
 
 .aboutJobDescriptionContainer>p{
-    font-family: 'font-light';
+    font-family: 'light';
     font-size: 20px;
     margin: 0; 
     margin-top: 10px;
@@ -528,7 +568,7 @@
 .radioUnorderedList>li{
     width: 100%;
     height: fit-content;
-    font-family: 'font-light';
+    font-family: 'light';
     font-size: 20px;
     display: flex;
 }
@@ -548,4 +588,120 @@
     width: calc(100% - 20px);
     height: 100%;
     display: flex;  
+}
+
+@media screen and (max-width: 1300px) {
+    .allJobsParent{
+        padding-left: 0%;
+        padding-right: 0%;
+    }
+}
+
+@media screen and (max-width: 910px) {
+    .leftSide{
+        min-width: 400px;
+    }
+
+    .jobTypeBtn{
+        width: 33.33%;
+        font-size: 12px;
+        cursor: none;
+    }
+
+    .jobTitle{
+        font-size: 18px;
+    }
+
+    
+.jobTitleColoredDivLeft>h1{
+    font-size: 18px;
+}
+
+.jobTitleNameContainer>p{
+    font-size: 15px;
+}
+
+.jobTitleColoredDivRight>p{
+    font-size: 12px;
+}
+}
+
+@media screen and (max-width: 770px) {
+    .parent{
+        padding: 0px 15px;
+    }
+
+    .box{
+        column-gap: 5px;
+    }
+
+    .inputContainer{
+        width: 50%;
+    }
+    
+    .input{
+        min-height: 40px;
+        border-radius: 5px;
+    }
+
+.icon{
+  width: 15px;
+  height: 15px;
+}
+
+
+.selectorContainer>p{
+    font-size: 10px;
+}
+
+.dropdown{
+    width: 10px;
+    height: 10px;
+}
+
+.selectorContainer2{
+    padding: 0px 3px;
+    min-height: 40px;
+    max-height: 40px;
+    border-radius: 5px;
+    column-gap: 3px;
+}
+
+.icon2{
+  width: 15px;
+  height: 15px;
+}
+
+.selectorContainer2>p{
+    font-size: 12px;   
+}
+
+.dropdown2{
+    width: 10px;
+    height: 10px;
+}
+.searchBtn{
+    height: 40px;
+    font-size: 10px;
+    border: 1px solid #c4c4c4;
+    padding: 0px 15px;
+    cursor: none;
+}
+
+    .leftSide{
+          width: 100%;
+          padding: 0px 10px;
+          max-height: fit-content;
+    }
+
+    .unorderedList{
+        max-height: fit-content;
+    }
+
+    .rightSide{
+        width: 100%;
+        max-height: fit-content;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
 }

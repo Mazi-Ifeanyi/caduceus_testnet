@@ -1,56 +1,64 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import ReactDOM from 'react-dom';
+
 
 import classes from '../styles/popups/ConnectMetaMaskPopup.module.css';
 import cancelIcon from '../assets/x.png';
 import metamaskIcon from '../assets/metamask.png';
 import connectWalletIcon from '../assets/connectwallet.png';
 import successIcon from '../assets/success.png';
-import { connect } from '../store/MetaMaskSlice';
-import { isNull, networks } from '../utils/Util';
+import { chain, isNull } from '../utils/Util';
+import { connectUser } from '../store/UserWalletSlice';
+import { useEffect } from 'react';
 
 
 const ConnectMetaMaskPopup = (props) =>{
     const { setOpenMetaPopup } = props;
-    const isConnected = useSelector(state=>state.meta.isConnected);
-    const dispatch = useDispatch();
     const navigate = useNavigate();
+    const isConnected = useSelector(state=>state.user.isConnected);
+    const address = useSelector(state=>state.user.wallet);
+    const dispatch = useDispatch();
+    
+    useEffect(()=>{
+        console.log('....', isConnected)
+    },[isConnected]);
 
 
     const connectToMetamask = async() =>{
-            try{
-                await window.ethereum.request({
-                  method: 'wallet_switchEthereumChain',
-                  params: [{ chainId: networks.optimism.chainId }],
-                });
-    
-                let accounts = await window.ethereum.request({method: 'eth_requestAccounts',params: []});
-                console.log(accounts)
-                if(isNull(accounts[0])){
-                    sessionStorage.removeItem('wallet');
-                }else{
-                    sessionStorage.setItem('wallet', accounts[0]);
-                    dispatch(connect({ wallet: accounts[0] }));
-                    
-                }
-    
-              }catch (switchError) {
-                // This error code indicates that the chain has not been added to MetaMask.
-                if (switchError.code === 4902) {
-                  try {
-                    await window.ethereum.request({
-                      method: 'wallet_addEthereumChain',
-                      params: [networks.optimism],
-                    });
-                    console.log('Added ', networks.optimism.chainName);
-                  } catch (addError) {
-                    // handle "add" error
-                  }
-                }
+        console.log('Trying to open metamask...')
+        try{
+            //switch network to sepolia
+            await window.ethereum.request({
+              method: 'wallet_switchEthereumChain',
+              params: [{ chainId: chain.chainId }],
+            });
+            const accounts = await window.ethereum.request({ method: 'eth_requestAccounts'});
+            if(!isNull(accounts)){
+                sessionStorage.setItem('user', JSON.stringify({ wallet: accounts[0]}));
+                dispatch(connectUser({ wallet: accounts[0] }));
             }
-        
-            // dispatch(connect());
-        }
+           
+          }catch (switchError) {
+            // This error code indicates that the chain has not been added to MetaMask, so add it.
+            if (switchError.code === 4902) {
+                console.log('chain does not exist')
+              try {
+                await window.ethereum.request({
+                  method: 'wallet_addEthereumChain',
+                  params: [chain],
+                });
+              } catch (addError) {
+                // handle "add" error
+              }
+            }
+        }   
+    }
+
+    const navigateAndClose = (path) =>{
+        navigate(path);
+        setOpenMetaPopup(false);
+    }
 
     const notConnected = (
         <>
@@ -82,24 +90,26 @@ const ConnectMetaMaskPopup = (props) =>{
         <div className={classes.successContainer}>
             <img src={successIcon} alt='' />
             <h1>Success!!!</h1>
-            <p>You have successfully connected wallet: 0xahyd6638h2865729j3...</p>
+            <p>{`You have successfully connected wallet: ${(!isNull(address))? address.slice(0, 10)+'...'+address.slice(-10) : ''}`}</p>
+            {/* <p>{`You have successfully connected wallet: 0xA52B24Ea...7a741b717e`}</p> */}
         </div>
         <div className={classes.jobsBtnContainer}>
-            <button className={classes.browseBtn} onClick={()=>navigate('/browse-job')}>Browse Jobs</button>
-            <button className={classes.postBtn} onClick={()=>navigate('/post-job')}>Post Jobs</button>
+            <button className={classes.browseBtn} onClick={()=>navigateAndClose('/browse-job')}>Browse Jobs</button>
+            <button className={classes.postBtn} onClick={()=>navigateAndClose('/post_job')}>Post Jobs</button>
         </div>
         </>
     )
+    // onClick={()=>navigate('/post-job')}
 
 
-    return(
+    const element = (
         <section className={classes.parent} onClick={()=>setOpenMetaPopup(false)}>
-            <div className={classes.box} onClick={(e)=>e.stopPropagation()}>
-                {!isConnected && notConnected}
-                {isConnected && connectSuccess}
-            </div>
-        </section>
+        <div className={classes.box} onClick={(e)=>e.stopPropagation()}>
+            {isConnected? connectSuccess : notConnected}
+        </div>
+       </section> 
     )
+    return ReactDOM.createPortal(element, document.getElementById('layout'));
 }
 
 export default ConnectMetaMaskPopup;
