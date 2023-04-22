@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/caduceus_testnet/static/css/main.c7211924.css",
-    "main.js": "/caduceus_testnet/static/js/main.df1c1992.js",
+    "main.css": "/caduceus_testnet/static/css/main.4319db56.css",
+    "main.js": "/caduceus_testnet/static/js/main.ec1deed6.js",
     "static/js/787.28f000a3.chunk.js": "/caduceus_testnet/static/js/787.28f000a3.chunk.js",
     "static/media/hero.png": "/caduceus_testnet/static/media/hero.f6228f0ef693c48791d8.png",
     "static/media/corporate_businessman.png": "/caduceus_testnet/static/media/corporate_businessman.1aa2a55014747e385395.png",
@@ -24,7 +24,6 @@
     "static/media/permissionless.png": "/caduceus_testnet/static/media/permissionless.2befc805b4a7376cb59a.png",
     "static/media/Frame_image.png": "/caduceus_testnet/static/media/Frame_image.71b8759571fab7b7472b.png",
     "static/media/sustain1.png": "/caduceus_testnet/static/media/sustain1.cb6036e155844da21614.png",
-    "static/media/open.svg": "/caduceus_testnet/static/media/open.c06cd11d7f46549ac9c16e0dd57feef0.svg",
     "static/media/filecoin.png": "/caduceus_testnet/static/media/filecoin.79734e3cb0fb8889d947.png",
     "static/media/hackathon.png": "/caduceus_testnet/static/media/hackathon.ad84199f949ff2dba310.png",
     "static/media/uk.png": "/caduceus_testnet/static/media/uk.b9a2ba74e5f8a55977e7.png",
@@ -37,18 +36,17 @@
     "static/media/cubes.png": "/caduceus_testnet/static/media/cubes.448264d6c24f91b4eda9.png",
     "static/media/skills.png": "/caduceus_testnet/static/media/skills.47b88ea5f76a9ca2cd22.png",
     "static/media/pin.png": "/caduceus_testnet/static/media/pin.64af410c6a5f32b5fd4f.png",
-    "static/media/Frame10.png": "/caduceus_testnet/static/media/Frame10.f31767228a701d8cd99e.png",
     "static/media/germany.png": "/caduceus_testnet/static/media/germany.cc670a050b591bf6656d.png",
     "static/media/discord.png": "/caduceus_testnet/static/media/discord.d7f7fca1a3c52fa3d56c.png",
     "static/media/facebook.png": "/caduceus_testnet/static/media/facebook.b293d5363351752caf25.png",
     "static/media/tiktok.png": "/caduceus_testnet/static/media/tiktok.8bb71cc6c1bd4e58530b.png",
     "index.html": "/caduceus_testnet/index.html",
-    "main.c7211924.css.map": "/caduceus_testnet/static/css/main.c7211924.css.map",
-    "main.df1c1992.js.map": "/caduceus_testnet/static/js/main.df1c1992.js.map",
+    "main.4319db56.css.map": "/caduceus_testnet/static/css/main.4319db56.css.map",
+    "main.ec1deed6.js.map": "/caduceus_testnet/static/js/main.ec1deed6.js.map",
     "787.28f000a3.chunk.js.map": "/caduceus_testnet/static/js/787.28f000a3.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.c7211924.css",
-    "static/js/main.df1c1992.js"
+    "static/css/main.4319db56.css",
+    "static/js/main.ec1deed6.js"
   ]
 }
