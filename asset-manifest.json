@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/caduceus_testnet/static/css/main.8308a84d.css",
-    "main.js": "/caduceus_testnet/static/js/main.1c6e169f.js",
+    "main.css": "/caduceus_testnet/static/css/main.fdc705f0.css",
+    "main.js": "/caduceus_testnet/static/js/main.18faa53c.js",
     "static/js/787.28f000a3.chunk.js": "/caduceus_testnet/static/js/787.28f000a3.chunk.js",
     "static/media/hero.png": "/caduceus_testnet/static/media/hero.f6228f0ef693c48791d8.png",
     "static/media/corporate_businessman.png": "/caduceus_testnet/static/media/corporate_businessman.1aa2a55014747e385395.png",
@@ -35,12 +35,12 @@
     "static/media/facebook.png": "/caduceus_testnet/static/media/facebook.b293d5363351752caf25.png",
     "static/media/tiktok.png": "/caduceus_testnet/static/media/tiktok.8bb71cc6c1bd4e58530b.png",
     "index.html": "/caduceus_testnet/index.html",
-    "main.8308a84d.css.map": "/caduceus_testnet/static/css/main.8308a84d.css.map",
-    "main.1c6e169f.js.map": "/caduceus_testnet/static/js/main.1c6e169f.js.map",
+    "main.fdc705f0.css.map": "/caduceus_testnet/static/css/main.fdc705f0.css.map",
+    "main.18faa53c.js.map": "/caduceus_testnet/static/js/main.18faa53c.js.map",
     "787.28f000a3.chunk.js.map": "/caduceus_testnet/static/js/787.28f000a3.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.8308a84d.css",
-    "static/js/main.1c6e169f.js"
+    "static/css/main.fdc705f0.css",
+    "static/js/main.18faa53c.js"
   ]
 }
