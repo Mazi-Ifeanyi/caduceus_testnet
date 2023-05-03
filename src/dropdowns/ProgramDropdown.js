@@ -15,10 +15,10 @@ const ProgramDropdown = (props) =>{
        
     return(
         <ul className={classes.ul}>
-            <li onClick={()=>navigateToPage('/job-seekers')}>Job Seekers</li>
-            <li onClick={()=>navigateToPage('/employer')}>Employers</li>
-            <li onClick={()=>navigateToPage('/community')}>Community</li>
-            <li onClick={()=>navigateToPage('/speakers')}>Speakers</li>
+            <li onClick={()=>navigateToPage('/job-finder-programme')}>Job Finder Programme</li>
+            <li onClick={()=>navigateToPage('/managed-service-programme')}>Managed Service Programme</li>
+            <li onClick={()=>navigateToPage('/community-programme')}>Community Programme</li>
+            <li onClick={()=>navigateToPage('/distinguished-speakers-programme')}>Distinguished Speakers</li>
         </ul>
     )
 }

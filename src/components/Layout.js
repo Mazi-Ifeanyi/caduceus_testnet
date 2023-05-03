@@ -1,5 +1,4 @@
-import { useSelector, useDispatch } from 'react-redux';
-
+import { useContext } from 'react';
 
 import classes from '../styles/components/Layout.module.css';
 import Footer from './Footer';
@@ -7,48 +6,62 @@ import Header from './Header';
 import Header2 from './Header2';
 import { useLayoutEffect } from 'react';
 import { chain, isNull } from '../utils/Util';
-import { connectUser, disconnectUser } from '../store/UserWalletSlice';
+import { AccountContext } from '../App';
+import { getIsStaked } from '../contracts/ContractManager';
 
 
 const Layout = (props) =>{
     const { children } = props;
-    const isConnected = useSelector(state=>state.user.isConnected);
-    const dispatch = useDispatch();
+    const { account, setAccount, setIsStaked } = useContext(AccountContext);
 
 
     useLayoutEffect(()=>{
-        const userData = JSON.parse(sessionStorage.getItem('user'));
-        if(!isNull(userData)){
-            const wallet = userData.wallet;
-            dispatch(connectUser({ wallet: wallet }));
+        const address = sessionStorage.getItem('address');
+        if(!isNull(address)){
+            setAccount({ address: address, isConnected: true });
         }else{
-            dispatch(disconnectUser());
+            setAccount({ address: '', isConnected: false });
+        }
+
+        function chainChanged(chainId){
+            window.location.reload();
+            console.log('chainId changed to: ', parseInt(chainId))
+            if(parseInt(chainId) !== chain.id){
+                sessionStorage.removeItem('address');
+                setAccount({ wallet: '', isConnected: false });
+              }
+        }
+
+        function accountChanged(accounts){
+            console.log('account changed: ', accounts[0]);
+                if(!isNull(accounts[0])){
+                    sessionStorage.setItem('address', accounts[0]);
+                    setAccount({ address: accounts[0], isConnected: true });
+                    getIsStaked().then(isStaked=>{
+                        setIsStaked(isStaked)
+                    }).catch(err=>{});
+                }else{
+                    sessionStorage.removeItem('address');
+                    setAccount({ address: '', isConnected: false });
+                }
         }
 
         if(window.ethereum){
-            window.ethereum.on('chainChanged', (chainId)=>{
-               if(chainId !== chain.id){
-                 sessionStorage.removeItem('user');
-                 dispatch(disconnectUser());
-               }
-            });
+            window.ethereum.on('chainChanged', chainChanged);
+            window.ethereum.on('accountsChanged', accountChanged);
+        }
 
-            window.ethereum.on('accountsChanged', (accounts)=>{
-                if(!isNull(accounts)){
-                    sessionStorage.setItem('user', JSON.stringify({ wallet: accounts[0] }))
-                    dispatch(connectUser({ wallet: accounts[0] }));
-                }else{
-                    sessionStorage.removeItem('user');
-                    dispatch(disconnectUser()); 
-                }
-            });
+        return()=>{
+            window.ethereum.removeListener('chainChanged', chainChanged);
+            window.ethereum.removeListener('accountsChanged', accountChanged);
         }
     },[]);
 
 
     return(
         <main className={classes.parent}>
-            {!isConnected? <Header /> : <Header2 />}
+            {/* {!account.isConnected? <Header /> : <Header2 />} */}
+             <Header2 />
             {children}
             <Footer />
         </main>

@@ -1,17 +1,18 @@
 import { useState } from 'react';
 
-
 import classes from '../styles/dropdowns/EventsDropdown.module.css';
 import ConnectMetaMaskPopup from '../popups/ConnectMetaMaskPopup';
 
+
 const DashBoardDropdown = (props) =>{
-    const { shouldShow, deviceType } = props;
-    const [openMetaPopup, setOpenMetaPopup] = useState(false);
+    const { shouldShow, deviceType, setDispatch, setShowHamburger } = props;
+    const [ openMetaPopup, setOpenMetaPopup ] = useState(false);
 
 
-    const openPopupHandler = () =>{
+   const openPopupHandler = () =>{
         setOpenMetaPopup(true);
-        // setShowHamburger(true);
+        console.log('open up')
+        setShowHamburger(true);
     }
 
     let style = {};
@@ -22,10 +23,10 @@ const DashBoardDropdown = (props) =>{
     return(
         <>
            {openMetaPopup && <ConnectMetaMaskPopup setOpenMetaPopup={setOpenMetaPopup} />}
-        <ul className={classes.ul} style={style}>
+         <ul className={classes.ul} style={style}>
             <li onClick={openPopupHandler}>Employers</li>
             <li onClick={openPopupHandler}>Job Seekers</li>
-        </ul>        
+        </ul>     
         </>
         
     )
