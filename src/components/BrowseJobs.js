@@ -72,7 +72,7 @@ let isDone = false, isRunning = false;
 const BrowseJobs = () =>{
     const [ dispatch, setDispatch ] = useReducer(reducerFunc, initialState);
     const [ openStakePopup, setOpenStakePopup] = useState(false);
-    const [ apply, setApply ] = useState({status: false, companyLink: '', applylink: ''});
+    const [ apply, setApply ] = useState(false);
     const width = useWindowSize();
     const [ showJobDesc, setShowJobDesc ] = useState(false);
     const offset = useRef(0);
@@ -246,7 +246,7 @@ const BrowseJobs = () =>{
 
 const openCompanyUrl =() =>{
     if(!isStaked)return;
-    setApply(prev=>({ ...prev, status: true }));
+    setApply(true);
     // if(!isNull(url)){
     //   if(!url.startsWith('http') || !url.startsWith('https')) url = `https://${url}`
     //      window.open(url);
@@ -722,7 +722,7 @@ const style={
     return(
         <main className={classes.parent} id='previous_application'>
             {openStakePopup && <StakePopup setOpenStakePopup={setOpenStakePopup} />}
-            {apply.status && <ApplyForJobPopup setApply={setApply} selectedPostingAddress={selectedPostingAddress} />}
+            {apply && <ApplyForJobPopup setApply={setApply} selectedPostingAddress={selectedPostingAddress} />}
             <header className={classes.header}>
                 <h1>Browse Jobs</h1>
                 <button onClick={()=>navigate('/jobseeker_dashboard')}>Previous Applications</button>

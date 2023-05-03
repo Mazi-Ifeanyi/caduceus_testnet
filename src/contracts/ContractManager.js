@@ -360,6 +360,7 @@ export const getJobDetailUsingPostingddress = async(postingAddress)=>{
     try{
       if(!isNull(jobDesc)){
       jobDesc = await sendGetRequest(`${JOBCRYPT_IPFS_URL}${jobDesc}`);
+      jobDesc = jobDesc.ops[0].insert;
       }
     }catch(err){
       jobDesc = ''
@@ -374,7 +375,7 @@ export const getJobDetailUsingPostingddress = async(postingAddress)=>{
     const searchCategory = await contractInstance.getFeatureSTRARRAY("CATEGORY_FEATURE");
     const productAddress = await contractInstance.getFeatureADDRESS("PRODUCT_FEATURE");
     let postedDate = await contractInstance.getFeatureUINT("POSTING_DATE_FEATURE");
-    postedDate = ethers.BigNumber.from(postedDate).toNumber();
+    postedDate = new Date(ethers.BigNumber.from(postedDate).toNumber() * 1000);
 
     const contractInstance2 = getContractInstance(productAddress, iOpenProductAbi, 'provider');
     let duration = await contractInstance2.getFeatureUINTValue("DURATION");
@@ -461,10 +462,10 @@ export const createJobSeekerDashboard = async() =>{
 
 //This is for jobseeker
 export const getAppliedJobsForUser = async(applicantAddress, jobSeekerDashAddress) =>{
-  console.log('Dash Address; ', jobSeekerDashAddress);
+  // console.log('Dash Address; ', jobSeekerDashAddress);
   let result = [];
   try{
-    const contractInstance = getContractInstance(jobSeekerDashAddress, iJCJobSeekerDashboardAbi, 'provider');
+    const contractInstance = getContractInstance(jobSeekerDashAddress, iJCJobSeekerDashboardAbi, 'signer');
     const appliedJobsAddresses = await contractInstance.getAppliedJobs();
     // console.log('Applied job addresses: ', appliedJobsAddresses)
     if(!isNull(appliedJobsAddresses)){
@@ -478,27 +479,43 @@ export const getAppliedJobsForUser = async(applicantAddress, jobSeekerDashAddres
 
  const getApplicationData = async(appliedJobsAddresses, applicantAddress) =>{
   const APPLICATION_DATA =[];
+  let link='', applicationDate = '';
   for(let i = 0; i < appliedJobsAddresses.length; i++){
     const appliedJobAddress = appliedJobsAddresses[i];
     try{
-        const contractInstance = getContractInstance(appliedJobAddress, iJCJobPostingAbi, 'provider');
+        const contractInstance = getContractInstance(appliedJobAddress, iJCJobPostingAbi, 'signer');
         const applicantData = await contractInstance.getApplicantData(applicantAddress);
         const jobTitle = await contractInstance.getFeatureSTR("JOB_TITLE");
-        const noOfApplicant = await contractInstance. getFeatureUINT("APPLICANT_COUNT_FEATURE");
-        const statusCode = await contractInstance.getStatus();
+        let noOfApplicant = await contractInstance. getFeatureUINT("APPLICANT_COUNT_FEATURE");
+        let statusCode = await contractInstance.getStatus();
         const status = resolveStatus(statusCode);
+        noOfApplicant = ethers.BigNumber.from(noOfApplicant).toNumber();
+        // console.log('appplicant data: ', applicantData);
+        console.log('No of applicant: ', statusCode);
+
+        if(!isNull(applicantData)){
+         applicationDate = ethers.BigNumber.from(applicantData.applicationDate).toNumber() * 1000;
+         link = applicantData.link
+        }
+        // console.log('job title: ', jobTitle);
+        // console.log('Status: ', statusCode);
+        // noOfApplicant = ethers.BigNumber.from(noOfApplicant).toNumber();
+        // statusCode = ethers.BigNumber.from(statusCode).toNumber();
+
 
         APPLICATION_DATA.push({
-           apply_date: applicantData.applicationDate,
-           link: applicantData.link,
+           apply_date: applicationDate,
+           link: link,
            jobTitle,
            noOfApplicant,
            status,
            statusCode,
-           address: appliedJobAddress
+           postingAddress: appliedJobAddress
         })
        
-    }catch(err){}
+    }catch(err){
+      console.log(err)
+    }
   }
     return APPLICATION_DATA;
 }

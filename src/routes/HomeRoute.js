@@ -33,6 +33,7 @@ import { ethers } from 'ethers';
 import { approveStake, getIsStaked, getMinStakeAmount, getUserStakedAmount, stake } from '../contracts/ContractManager';
 import Wrapper from '../components/Wrapper';
 import Spinner from '../components/Spinner';
+import ApplyForJobPopup from '../popups/ApplyForJobPopup';
 
 
 
@@ -47,6 +48,10 @@ import Spinner from '../components/Spinner';
    const [ latestJobs, setLatestJobs ] = useState(null);
    const [ popularJobs, setPopularJobs ] = useState(null);
    const [ isLoading, setIsLoading ] = useState({ featured: false, latest: false, popular: false });
+   const [ apply, setApply ] = useState(false);
+   const [ selectedPostingAddress, setSelectedPostingAddress ] = useState(undefined);
+
+   
 
    useEffect(()=>{
       if(account.isConnected)setIsMetamaskInstalled(true);
@@ -87,7 +92,6 @@ const fetchLatestJobs = useCallback(async() =>{
         // console.log('Latest jobs: ', jobs[0]);
         const applyLink = jobs[0].applyLink || jobs[0].companyLink;
         jobs[0].applyLink = applyLink;
-        setFeaturedJobs(jobs[0]);
         setLatestJobs(jobs[0]);
     }
 
@@ -99,10 +103,9 @@ const fetchPopularJobs = useCallback(async() =>{
     setIsLoading(prev=>({...prev, popular: true }));
     const jobs = await getPopularJobs(0);
     if(!isNull(jobs)){
-        // console.log('Popular jobs: ', jobs[0]);
+        console.log('Popular jobs: ', jobs[0]);
         const applyLink = jobs[0].applyLink || jobs[0].companyLink;
         jobs[0].applyLink = applyLink;
-        setFeaturedJobs(jobs[0]);
         setPopularJobs(jobs[0]);
     }
     setIsLoading(prev=>({...prev, popular: false }));
@@ -147,6 +150,10 @@ useEffect(()=>{
  },[fetchFeaturedJobs, fetchLatestJobs, fetchPopularJobs]);
 
 
+ const openPopupHandler = (postingAddress) =>{
+    setSelectedPostingAddress(postingAddress);
+    setApply(true)
+ }
 
 const notConnected = (
     <section className={classes.center}>
@@ -178,6 +185,7 @@ const notConnected = (
 
 const connected = (
     <section className={classes.center}>
+        {apply && <ApplyForJobPopup setApply={setApply} selectedPostingAddress={selectedPostingAddress} />}
       <article className={classes.rectangle}>
           <h1>Job Board</h1>
           <ul className={classes.box}>
@@ -192,7 +200,7 @@ const connected = (
                       <p>{featuredJobs.companyName}</p>
                       {(isApproved && !isStaked) &&<button className={classes.applyBtn} onClick={stakeHandler}>Stake To Apply</button>}
                       {(!isApproved && !isStaked) &&<button className={classes.applyBtn} onClick={approveHandler}>Approve 1 CMP</button>}
-                      {isStaked &&<button className={classes.applyBtn}>Apply</button>}
+                      {isStaked &&<button className={classes.applyBtn} onClick={()=>openPopupHandler(featuredJobs.postingAddress)}>Apply</button>}
                       <button className={classes.browseBtn} onClick={()=>navigate('/browse-job')}>Browse Jobs</button>
                       </>}
                       {(!isLoading.featured && isNull(featuredJobs)) &&<Wrapper height='fit-content'>
@@ -203,7 +211,7 @@ const connected = (
                <li>
                    <div className={classes.jobTop}>Latest Jobs</div>
                    <div className={classes.content}>
-                    {isLoading.featured &&<Wrapper height='fit-content'>
+                    {isLoading.latest &&<Wrapper height='fit-content'>
                         <Spinner />
                     </Wrapper>}
                       {(!isLoading.latest && !isNull(latestJobs)) &&<>
@@ -211,7 +219,7 @@ const connected = (
                       <p>{latestJobs.companyName}</p>
                       {(isApproved && !isStaked) &&<button className={classes.applyBtn} onClick={stakeHandler}>Stake To Apply</button>}
                       {(!isApproved && !isStaked) &&<button className={classes.applyBtn} onClick={approveHandler}>Approve 1 CMP</button>}
-                      {isStaked &&<button className={classes.applyBtn}>Apply</button>}
+                      {isStaked &&<button className={classes.applyBtn} onClick={()=>openPopupHandler(latestJobs.postingAddress)}>Apply</button>}
                       <button className={classes.browseBtn} onClick={()=>navigate('/browse-job')}>Browse Jobs</button>
                       </>}
                       {(!isLoading.latest && isNull(latestJobs)) &&<Wrapper height='fit-content'>
@@ -222,7 +230,7 @@ const connected = (
                <li>
                    <div className={classes.jobTop}>Popular Jobs</div>
                    <div className={classes.content}>
-                    {isLoading.featured &&<Wrapper height='fit-content'>
+                    {isLoading.popular &&<Wrapper height='fit-content'>
                         <Spinner />
                     </Wrapper>}
                       {(!isLoading.popular && !isNull(popularJobs)) &&<>
@@ -230,7 +238,7 @@ const connected = (
                       <p>{popularJobs.companyName}</p>
                       {(isApproved && !isStaked) &&<button className={classes.applyBtn} onClick={stakeHandler}>Stake To Apply</button>}
                       {(!isApproved && !isStaked) &&<button className={classes.applyBtn} onClick={approveHandler}>Approve 1 CMP</button>}
-                      {isStaked &&<button className={classes.applyBtn}>Apply</button>}
+                      {isStaked &&<button className={classes.applyBtn} onClick={()=>openPopupHandler(popularJobs.postingAddress)}>Apply</button>}
                       <button className={classes.browseBtn} onClick={()=>navigate('/browse-job')}>Browse Jobs</button>
                       </>}
                       {(!isLoading.popular && isNull(popularJobs)) &&<Wrapper height='fit-content'>

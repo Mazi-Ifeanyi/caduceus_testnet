@@ -52,7 +52,7 @@ const ApplyForJobPopup = (props) =>{
         if(type === 2){
             navigate('/jobseeker_dashboard');
         }
-        setApply(prev=>({...prev, status: false}));
+        setApply(false);
     }
 
     const formatLink = () =>{

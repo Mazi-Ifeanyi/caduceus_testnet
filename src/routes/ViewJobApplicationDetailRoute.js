@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import DOMPurify from 'dompurify';
 
 import classes from '../styles/routes/ViewJobApplicationDetailRoute.module.css';
@@ -6,19 +6,27 @@ import locationIcon from '../assets/pin.png';
 import briefcase from '../assets/briefcase.png';
 import locationSupportIcon from '../assets/support.png';
 import paymentIcon from '../assets/crypto.png';
+import copyIcon from '../assets/copy.png';
 import backIcon from '../assets/back.png';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { getJobDetailUsingPostingddress } from '../contracts/ContractManager';
 import { isNull } from '../utils/Util';
+import Moment from 'react-moment';
 
 
 const ViewJobApplicationDetailRoute = (props) =>{
-    const { postingAddress } = props;
+    // const { postingAddress } = props;
     const navigate = useNavigate();
-    const [ data, setData ] = useState({ jobTitle: '', locationType: '--', locationSupport: '--', workLocation: '--', companyName: '', companyLink: '', companySummary: '', paymentType: '', workType: '', jobDesc: '', searchTerms: '', applyLink: '', skills: [], searchCategory: [], postedDate: 0 });
+    const [ data, setData ] = useState({ jobTitle: '', locationType: '--', locationSupport: '--', workLocation: '--', companyName: '', companyLink: '', companySummary: '', paymentType: '', workType: '', jobDesc: '', searchTerms: '', applyLink: '', skills: [], searchCategory: [], postedDate: null });
+    const location = useLocation();
+    const [ isCopied, setIsCopied ] = useState(false);
+    const copyRef = useRef();
+
+    
 
     const getDetail = useCallback(async() =>{
-        const result = await getJobDetailUsingPostingddress(postingAddress);
+        const result = await getJobDetailUsingPostingddress(location.state.selectedPostingAddress);
+        console.log(result);
         setData({
             jobTitle: result.jobTitle, locationType: result.locationType, locationSupport: result.locationSupport, workLocation: result.workLocation, companyName: result.workLocation, companyLink: result.companyLink, companySummary: result.companySummary, paymentType: result.paymentType, workType: result.workType, jobDesc: result.jobDesc, searchTerms: result.searchTerms, applyLink: result.applyLink, skills: result.skills, searchCategory: result.searchCategory,postedDate: result.postedDate
         });
@@ -29,6 +37,29 @@ const ViewJobApplicationDetailRoute = (props) =>{
         getDetail();
     },[getDetail]);
 
+    
+    const trim = (value, length) =>{
+        if(!isNull(value)){
+            return (value.length > length)? value.slice(0, length)+'...' : value;
+        }
+
+        return '';
+    }
+
+    const copyHandler = (event, value) =>{
+        if(!isNull(value)){
+            // console.log(event.clientX)
+            // copyRef.current.style.top = event.clientX - '100vw';
+            // copyRef.current.style.left = event.clientY + '100px';
+            navigator.clipboard.writeText(value).then(()=>{
+                setIsCopied(true);
+                const timeout = setTimeout(()=>{
+                    setIsCopied(false);
+                    clearTimeout(timeout);
+                },2000);
+            })
+        }
+    }
 
     return(
         <section className={classes.parent}>
@@ -40,8 +71,8 @@ const ViewJobApplicationDetailRoute = (props) =>{
                     <div className={classes.jobTitleColoredDivLeft}>
                         <h1>{data.jobTitle}</h1>
                         <div className={classes.jobTitleNameContainer}>
-                            <span>{isNull(data.companyName)? '' : data.companyName.slice(0,1)}</span>
-                            <p>{data.companyName}</p>
+                            <span>{trim(data.companyName, 1)}</span>
+                            <p>{trim(data.companyName, 20)}</p>
                         </div>
                     </div>
                 </header>
@@ -107,14 +138,16 @@ const ViewJobApplicationDetailRoute = (props) =>{
                     <div className={classes.footerDiv}>
                         <h1>Apply Details: </h1>
                         <span className={classes.list}>
-                            <h1 className={classes.emailTxt}>{data.applyLink}</h1>
+                            <h1 className={classes.emailTxt}>{trim(data.applyLink, 30)}</h1>
+                            {!isNull(data.applyLink) &&<img src={copyIcon} alt='' className={classes.copyIcon} onClick={(e)=>copyHandler(e, data.applyLink)} />}
+                            {/* {<span ref={copyRef} className={classes.copySpan}>Copied!</span>} */}
                         </span>
                     </div>
                     <div className={classes.footerDiv}>
                         <h1>First Posted: </h1>
-                        <span className={classes.list}>
-                            <h1 className={classes.emailTxt} style={{ color: '#000'}}> Sat Mar 18 2023 13:50:24 GMT+0100 </h1>
-                        </span>
+                        {(!isNull(data.postedDate)) &&<span className={classes.list}>
+                            <h1 className={classes.emailTxt} style={{ color: '#000'}}><Moment format="MMM Do YYYY, h:mm:ss a">{data.postedDate}</Moment> </h1>
+                        </span>}
                     </div>
                 </footer>
             </main>

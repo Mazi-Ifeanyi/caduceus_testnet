@@ -66,8 +66,8 @@
 
 .copyContainer{
   display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
   column-gap: 10px;
   position: relative;
   width: 100%;
@@ -91,7 +91,7 @@
     font-family: 'light';
     font-weight: 600;
     right: 0;
-    bottom: 100%;
+    top: 0%;
 }
 
 .getLinkTxt{

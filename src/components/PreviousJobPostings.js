@@ -46,8 +46,6 @@ const PreviousJobPostings = () =>{
         setIsLoading(false);
         setMessage('You don\t have any job posted yet.');
     }
-   
-
    },[employerDashAddress, account.address]);
 
 
