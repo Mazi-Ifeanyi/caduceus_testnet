@@ -71,7 +71,9 @@ import Spinner from '../components/Spinner';
     setIsLoading(prev=>({...prev, featured: true }));
    const jobs = await getFeaturedJobs(0);
    if(!isNull(jobs)){
-    console.log('Featured jobs: ', jobs[0]);
+    // console.log('Featured jobs: ', jobs[0]);
+    const applyLink = jobs[0].applyLink || jobs[0].companyLink;
+    jobs[0].applyLink = applyLink;
     setFeaturedJobs(jobs[0]);
    }
    setIsLoading(prev=>({...prev, featured: false }));
@@ -82,7 +84,10 @@ const fetchLatestJobs = useCallback(async() =>{
     setIsLoading(prev=>({...prev, latest: true }));
     const jobs = await getLatestJobs(0);
     if(!isNull(jobs)){
-        console.log('Latest jobs: ', jobs[0]);
+        // console.log('Latest jobs: ', jobs[0]);
+        const applyLink = jobs[0].applyLink || jobs[0].companyLink;
+        jobs[0].applyLink = applyLink;
+        setFeaturedJobs(jobs[0]);
         setLatestJobs(jobs[0]);
     }
 
@@ -94,7 +99,10 @@ const fetchPopularJobs = useCallback(async() =>{
     setIsLoading(prev=>({...prev, popular: true }));
     const jobs = await getPopularJobs(0);
     if(!isNull(jobs)){
-        console.log('Popular jobs: ', jobs[0]);
+        // console.log('Popular jobs: ', jobs[0]);
+        const applyLink = jobs[0].applyLink || jobs[0].companyLink;
+        jobs[0].applyLink = applyLink;
+        setFeaturedJobs(jobs[0]);
         setPopularJobs(jobs[0]);
     }
     setIsLoading(prev=>({...prev, popular: false }));
@@ -116,8 +124,8 @@ const run = useCallback(async() =>{
 const approveHandler = async() =>{
     if(!isApproved){
     const txn = await approveStake();
-    console.log(txn)
-    console.log('hash: ',txn.hash);
+    // console.log(txn)
+    // console.log('hash: ',txn.hash);
     if(!isNull(txn.hash)){
         setIsApproved(true);
     }
@@ -187,28 +195,47 @@ const connected = (
                       {isStaked &&<button className={classes.applyBtn}>Apply</button>}
                       <button className={classes.browseBtn} onClick={()=>navigate('/browse-job')}>Browse Jobs</button>
                       </>}
+                      {(!isLoading.featured && isNull(featuredJobs)) &&<Wrapper height='fit-content'>
+                        <p className={classes.errorTxt}>No Jobs available</p>
+                    </Wrapper>}
                    </div>
                </li>
                <li>
                    <div className={classes.jobTop}>Latest Jobs</div>
                    <div className={classes.content}>
-                      <h2>Facebook</h2>
-                      <p>Jobcrypt</p>
-                      {(isApproved && !isStaked) &&<button className={classes.applyBtn}>Stake To Apply</button>}
-                      {(!isApproved && !isStaked) &&<button className={classes.applyBtn}>Approve 1 CMP</button>}
+                    {isLoading.featured &&<Wrapper height='fit-content'>
+                        <Spinner />
+                    </Wrapper>}
+                      {(!isLoading.latest && !isNull(latestJobs)) &&<>
+                      <h2>{latestJobs.jobTitle}</h2>
+                      <p>{latestJobs.companyName}</p>
+                      {(isApproved && !isStaked) &&<button className={classes.applyBtn} onClick={stakeHandler}>Stake To Apply</button>}
+                      {(!isApproved && !isStaked) &&<button className={classes.applyBtn} onClick={approveHandler}>Approve 1 CMP</button>}
                       {isStaked &&<button className={classes.applyBtn}>Apply</button>}
                       <button className={classes.browseBtn} onClick={()=>navigate('/browse-job')}>Browse Jobs</button>
+                      </>}
+                      {(!isLoading.latest && isNull(latestJobs)) &&<Wrapper height='fit-content'>
+                        <p className={classes.errorTxt}>No Jobs available</p>
+                    </Wrapper>}
                    </div>
                </li>
                <li>
                    <div className={classes.jobTop}>Popular Jobs</div>
                    <div className={classes.content}>
-                      <h2>Facebook</h2>
-                      <p>Jobcrypt</p>
-                      {(isApproved && !isStaked) &&<button className={classes.applyBtn}>Stake To Apply</button>}
-                      {(!isApproved && !isStaked) &&<button className={classes.applyBtn}>Approve 1 CMP</button>}
+                    {isLoading.featured &&<Wrapper height='fit-content'>
+                        <Spinner />
+                    </Wrapper>}
+                      {(!isLoading.popular && !isNull(popularJobs)) &&<>
+                      <h2>{popularJobs.jobTitle}</h2>
+                      <p>{popularJobs.companyName}</p>
+                      {(isApproved && !isStaked) &&<button className={classes.applyBtn} onClick={stakeHandler}>Stake To Apply</button>}
+                      {(!isApproved && !isStaked) &&<button className={classes.applyBtn} onClick={approveHandler}>Approve 1 CMP</button>}
                       {isStaked &&<button className={classes.applyBtn}>Apply</button>}
                       <button className={classes.browseBtn} onClick={()=>navigate('/browse-job')}>Browse Jobs</button>
+                      </>}
+                      {(!isLoading.popular && isNull(popularJobs)) &&<Wrapper height='fit-content'>
+                        <p className={classes.errorTxt}>No Jobs available</p>
+                    </Wrapper>}
                    </div>
                </li>
           </ul>

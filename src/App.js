@@ -82,8 +82,6 @@ const [ editingJobPosting, setEditingJobPosting ] = useState('');
     registryGetAllContracts();
   },[]);
 
-  const date = new Date(1683031812);
-  console.log('Date is: ',date)
 
   return (
       <AccountContext.Provider value={accountData}>

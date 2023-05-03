@@ -31,11 +31,11 @@ const PreviousJobApplications = () =>{
         console.log('jobseeker address: ', jobSeekerDashAddress);
         if(isNull(account.address))return;
         const appliedJobs = await getAppliedJobsForUser(account.address, jobSeekerDashAddress);
-        console.log('APPLIED JOBS: ', appliedJobs);
+        // console.log('APPLIED JOBS: ', appliedJobs);
         setIsLoading(false);
         setAppliedJobsArray(appliedJobs);
         if(isNull(appliedJobs))setMessage('No previous application.');
-    },[account.isConnected]);
+    },[account.isConnected, jobSeekerDashAddress]);
 
 
     useEffect(()=>{

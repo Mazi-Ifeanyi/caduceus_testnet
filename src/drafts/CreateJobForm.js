@@ -56,9 +56,9 @@ const CreateJobForm = (props) =>{
     },[]);
 
     const getProductAddressInfoHandler = useCallback(async()=>{
-        console.log('>>>>>>>>>>>>>', employerPostingAddress)
+        // console.log('>>>>>>>>>>>>>', employerPostingAddress)
         const result = await getProductAddressInfo(employerPostingAddress);
-        console.log(result)
+        // console.log(result)
         if(!isNull(result)){
             setEditingJobPosting(`Note: You are editing ${result.name} - ${result.price} - ${result.currency} (${result.productAddress })`);
         }
@@ -66,7 +66,7 @@ const CreateJobForm = (props) =>{
 
     const getPostStatus = async() =>{
         const status = await getPostJobStatus(employerPostingAddress);
-        console.log('has user posted: ', status);//draft, posted statue etc
+        // console.log('has user posted: ', status);//draft, posted statue etc
         setPostStatus(status);
     }
 
@@ -149,7 +149,7 @@ const CreateJobForm = (props) =>{
 
     const onFileChangeHandler = (e) =>{
         const file = e.target.files[0];
-        console.log(file)
+        // console.log(file)
         setCompanyLogo(file)
     }
 
@@ -179,7 +179,7 @@ const CreateJobForm = (props) =>{
         if(isNull(value))setSearchTerms({ isValid: false, text: value });
         else setSearchTerms({ isValid: true, text: value });
         setPaymentStatus(prev=>({...prev, isSaved: false }));
-        console.log(value)
+        // console.log(value)
     }
 
     const updateJobDescHandler = (e) =>{
@@ -247,7 +247,7 @@ const CreateJobForm = (props) =>{
             
         }
         }catch(err){
-            console.log('something happened', err)
+            // console.log('something happened', err)
         }
         isRunning = false;
         }
@@ -349,7 +349,6 @@ const CreateJobForm = (props) =>{
                     <button className={classes.logoBtn} onClick={()=>inputRef.current.click()}>Upload Logo</button>
                     <div className={classes.logoList}>
                         {(!isNull(companyLogo)) && <span className={classes.file}>
-                            {console.log('company logo: ', companyLogo.name)}
                             <p>{companyLogo.name}</p>
                             <img src={cancelIcon} alt='' onClick={()=>removeImage(companyLogo.name)} />
                         </span>}

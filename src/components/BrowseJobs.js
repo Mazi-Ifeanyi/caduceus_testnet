@@ -83,7 +83,7 @@ const BrowseJobs = () =>{
     const [ jobDetails, setJobDetails ] = useState(null);
     const [ isLoadingJobDesc, setIsLoadingJobDesc ] = useState({ status: false, message: '' });
     const { isStaked, account, isApproved, setIsApproved, setIsStaked } = useContext(AccountContext);
-    const [ selectedJob, setSelectedJob ] = useState(undefined);
+    const [ selectedPostingAddress, setSelectedPostingAddress ] = useState(undefined);
     const navigate = useNavigate();
 
 
@@ -91,8 +91,8 @@ const BrowseJobs = () =>{
         if(isRunning)return;
         isRunning = true;
         const approve = await approveStake();
-        console.log(approve)
-        console.log('hash: ',approve.hash);
+        // console.log(approve)
+        // console.log('hash: ',approve.hash);
         const wait = await getProvider().waitForTransaction(approve.hash);
         if(!isNull(wait) && wait.status ===1){
             setIsApproved(true);
@@ -105,7 +105,7 @@ const BrowseJobs = () =>{
     const stakeHandler = useCallback(async() =>{
         if(isRunning)return;
         isRunning = true;
-        console.log('is approved: ', isApproved);
+        // console.log('is approved: ', isApproved);
         const staked = await stake();
         const wait = await getProvider().waitForTransaction(staked.hash);
         if(!isNull(wait) && wait.status ===1){
@@ -134,7 +134,7 @@ const BrowseJobs = () =>{
        }
 
        setIsLoading({ status: false, message: ''});
-       console.log('Featured Jobs Addresses: ', jobs);
+    //    console.log('Featured Jobs Addresses: ', jobs);
 
     },[]);
 
@@ -149,7 +149,7 @@ const BrowseJobs = () =>{
         }
 
         setIsLoading({ status: false, message: ''})
-        console.log('Latest Jobs Addresses: ', jobs);
+        // console.log('Latest Jobs Addresses: ', jobs);
     
         },[]);
 
@@ -164,7 +164,7 @@ const BrowseJobs = () =>{
         }
 
         setIsLoading({ status: false, message: ''})
-        console.log('popular Jobs Addresses: ', jobs);
+        // console.log('popular Jobs Addresses: ', jobs);
     
     },[]);
 
@@ -187,7 +187,7 @@ const BrowseJobs = () =>{
 
 
     const selectedJobHandler = (type)=>{
-        console.log('isDone: ', isDone)
+        // console.log('isDone: ', isDone)
     
         // if(isDone){
         if(type === 'featured' && !dispatch.featured && account.isConnected){
@@ -214,13 +214,14 @@ const BrowseJobs = () =>{
     // }
     }
 
-    const fetchJobDetailsHandler = async(address) =>{
-        setSelectedJob(address);
+    const fetchJobDetailsHandler = async(postingAddress) =>{
+        console.log(postingAddress)
+        setSelectedPostingAddress(postingAddress);
         setJobDetails(null);
         setShowJobDesc(true);//only for mobile
         setIsLoadingJobDesc({ status: true, message: 'Loading job details...' });
-        console.log('user staked: ', isStaked);
-        const result_ = await getLatestJobDetails(address, isStaked);
+        // console.log('user staked: ', isStaked);
+        const result_ = await getLatestJobDetails(postingAddress, isStaked);
         if(!isNull(result_[0])){
             const result = result_[0];
         setJobDetails({
@@ -237,16 +238,15 @@ const BrowseJobs = () =>{
             skillsFeature: result.skillsFeature,
             jobDesc: result.jobDesc,
         });
-        console.log('job details: ', result);
+        // console.log('job details: ', result);
     }
 
     setIsLoadingJobDesc({ status: false, message: 'Sorry, couldn\'t load this job detail.' });
 }
 
 const openCompanyUrl =() =>{
-    let url = jobDetails.applyLink || jobDetails.companyLink;
     if(!isStaked)return;
-    setApply({ status: true, url});
+    setApply(prev=>({ ...prev, status: true }));
     // if(!isNull(url)){
     //   if(!url.startsWith('http') || !url.startsWith('https')) url = `https://${url}`
     //      window.open(url);
@@ -263,7 +263,7 @@ const reloadJobsHandler = () =>{
     if(dispatch.popular)fetchPopularJobs();
 }
 
-const selectedJobStyle = (address) =>{
+const selectedJobStyle = (postingAddress) =>{
 
 }
 
@@ -385,21 +385,21 @@ const style={
            
             <ul className={classes.unorderedList}>
                 {(!isNull(featuredJobArray)) && featuredJobArray.map((item, idx)=>(
-                    <li key={item.address} onClick={()=>fetchJobDetailsHandler(item.address)} style={selectedJob === item.address? style : {}}>
+                    <li key={item.postingAddress} onClick={()=>fetchJobDetailsHandler(item.postingAddress)} style={selectedPostingAddress === item.postingAddress? style : {}}>
                     <div className={classes.profileBox}>
                         <span className={classes.circle}>
                         {item.companyName.slice(0,1)}
                         </span>
                     </div>
                     <div className={classes.detailContainer}>
-                        <h2 className={classes.jobTitle} style={selectedJob === item.address? style : {}}>{getJobTitle(item.jobTitle)}</h2>
-                        <p className={classes.name} style={selectedJob === item.address? style : {}}>{item.companyName}</p>
-                        <p className={classes.locationTxt} style={selectedJob === item.address? style : {}}>{`${item.locationType} | ${item.workType}`}</p>
-                        <p className={classes.locationTxt} style={selectedJob === item.address? style : {}}><Moment fromNow>{item.postingDateFeatures}</Moment></p>
+                        <h2 className={classes.jobTitle} style={selectedPostingAddress === item.postingAddress? style : {}}>{getJobTitle(item.jobTitle)}</h2>
+                        <p className={classes.name} style={selectedPostingAddress === item.postingAddress? style : {}}>{item.companyName}</p>
+                        <p className={classes.locationTxt} style={selectedPostingAddress === item.postingAddress? style : {}}>{`${item.locationType} | ${item.workType}`}</p>
+                        <p className={classes.locationTxt} style={selectedPostingAddress === item.postingAddress? style : {}}><Moment fromNow>{item.postingDateFeatures}</Moment></p>
                     </div>
                     <div className={classes.optionContainer}>
-                        {/* <span className={classes.smallCircle} style={selectedJob === item.address? style : {}}>
-                            <img src={moreIcon} alt='' style={selectedJob === item.address? style : {}} />
+                        {/* <span className={classes.smallCircle} style={selectedPostingAddress === item.postingAddress? style : {}}>
+                            <img src={moreIcon} alt='' style={selectedPostingAddress === item.postingAddress? style : {}} />
                         </span> */}
                     </div>
                 </li>
@@ -419,21 +419,21 @@ const style={
            
             <ul className={classes.unorderedList}>
                 {(!isNull(latestJobArray)) && latestJobArray.map((item, idx)=>(
-                    <li key={item.address} onClick={()=>fetchJobDetailsHandler(item.address)} style={selectedJob === item.address? style : {}}>
+                    <li key={item.postingAddress} onClick={()=>fetchJobDetailsHandler(item.postingAddress)} style={selectedPostingAddress === item.postingAddress? style : {}}>
                     <div className={classes.profileBox}>
                         <span className={classes.circle}>
                         {item.companyName.slice(0,1)}
                         </span>
                     </div>
                     <div className={classes.detailContainer}>
-                        <h2 className={classes.jobTitle} style={selectedJob === item.address? style : {}}>{getJobTitle(item.jobTitle)}</h2>
-                        <p className={classes.name} style={selectedJob === item.address? style : {}}>{item.companyName}</p>
-                        <p className={classes.locationTxt} style={selectedJob === item.address? style : {}}>{`${item.locationType} | ${item.workType}`}</p>
-                        <p className={classes.locationTxt} style={selectedJob === item.address? style : {}}><Moment fromNow>{item.postingDateFeatures}</Moment></p>
+                        <h2 className={classes.jobTitle} style={selectedPostingAddress === item.postingAddress? style : {}}>{getJobTitle(item.jobTitle)}</h2>
+                        <p className={classes.name} style={selectedPostingAddress === item.postingAddress? style : {}}>{item.companyName}</p>
+                        <p className={classes.locationTxt} style={selectedPostingAddress === item.postingAddress? style : {}}>{`${item.locationType} | ${item.workType}`}</p>
+                        <p className={classes.locationTxt} style={selectedPostingAddress === item.postingAddress? style : {}}><Moment fromNow>{item.postingDateFeatures}</Moment></p>
                     </div>
                     <div className={classes.optionContainer}>
-                        {/* <span className={classes.smallCircle} style={selectedJob === item.address? style : {}}>
-                            <img src={moreIcon} alt='' style={selectedJob === item.address? style : {}} />
+                        {/* <span className={classes.smallCircle} style={selectedPostingAddress === item.postingAddress? style : {}}>
+                            <img src={moreIcon} alt='' style={selectedPostingAddress === item.postingAddress? style : {}} />
                         </span> */}
                     </div>
                 </li>
@@ -453,21 +453,21 @@ const style={
            
             <ul className={classes.unorderedList}>
                 {(!isNull(popularJobArray)) && popularJobArray.map((item, idx)=>(
-                    <li key={item.address} onClick={()=>fetchJobDetailsHandler(item.address)} style={selectedJob === item.address? style : {}}>
+                    <li key={item.postingAddress} onClick={()=>fetchJobDetailsHandler(item.postingAddress)} style={selectedPostingAddress === item.postingAddress? style : {}}>
                     <div className={classes.profileBox}>
                         <span className={classes.circle}>
                         {item.companyName.slice(0,1)}
                         </span>
                     </div>
                     <div className={classes.detailContainer}>
-                        <h2 className={classes.jobTitle} style={selectedJob === item.address? style : {}}>{getJobTitle(item.jobTitle)}</h2>
-                        <p className={classes.name} style={selectedJob === item.address? style : {}}>{item.companyName}</p>
-                        <p className={classes.locationTxt} style={selectedJob === item.address? style : {}}>{`${item.locationType} | ${item.workType}`}</p>
-                        <p className={classes.locationTxt} style={selectedJob === item.address? style : {}}><Moment fromNow>{item.postingDateFeatures}</Moment></p>
+                        <h2 className={classes.jobTitle} style={selectedPostingAddress === item.postingAddress? style : {}}>{getJobTitle(item.jobTitle)}</h2>
+                        <p className={classes.name} style={selectedPostingAddress === item.postingAddress? style : {}}>{item.companyName}</p>
+                        <p className={classes.locationTxt} style={selectedPostingAddress === item.postingAddress? style : {}}>{`${item.locationType} | ${item.workType}`}</p>
+                        <p className={classes.locationTxt} style={selectedPostingAddress === item.postingAddress? style : {}}><Moment fromNow>{item.postingDateFeatures}</Moment></p>
                     </div>
                     <div className={classes.optionContainer}>
-                        <span className={classes.smallCircle} style={selectedJob === item.address? style : {}}>
-                            <img src={moreIcon} alt='' style={selectedJob === item.address? style : {}} />
+                        <span className={classes.smallCircle} style={selectedPostingAddress === item.postingAddress? style : {}}>
+                            <img src={moreIcon} alt='' style={selectedPostingAddress === item.postingAddress? style : {}} />
                         </span>
                     </div>
                 </li>
@@ -566,7 +566,7 @@ const style={
             </Wrapper>}
             <ul className={classes.unorderedList}>
                 {(!isNull(featuredJobArray)) && featuredJobArray.map((item, idx)=>(
-                   <li key={item.address} onClick={()=>fetchJobDetailsHandler(item.address)}>
+                   <li key={item.postingAddress} onClick={()=>fetchJobDetailsHandler(item.postingAddress)}>
                    <div className={classes.profileBox}>
                        <span className={classes.circle}>
                            
@@ -599,7 +599,7 @@ const style={
             </Wrapper>}
             <ul className={classes.unorderedList}>
                 {(!isNull(latestJobArray)) && latestJobArray.map((item, idx)=>(
-                   <li key={item.address} onClick={()=>fetchJobDetailsHandler(item.address)}>
+                   <li key={item.postingAddress} onClick={()=>fetchJobDetailsHandler(item.postingAddress)}>
                    <div className={classes.profileBox}>
                        <span className={classes.circle}>
                            
@@ -632,7 +632,7 @@ const style={
             </Wrapper>}
             <ul className={classes.unorderedList}>
                 {(!isNull(popularJobArray)) && popularJobArray.map((item, idx)=>(
-                   <li key={item.address} onClick={()=>fetchJobDetailsHandler(item.address)}>
+                   <li key={item.postingAddress} onClick={()=>fetchJobDetailsHandler(item.postingAddress)}>
                    <div className={classes.profileBox}>
                        <span className={classes.circle}>
                            
@@ -722,7 +722,7 @@ const style={
     return(
         <main className={classes.parent} id='previous_application'>
             {openStakePopup && <StakePopup setOpenStakePopup={setOpenStakePopup} />}
-            {apply.status && <ApplyForJobPopup setApply={setApply} apply={apply} />}
+            {apply.status && <ApplyForJobPopup setApply={setApply} selectedPostingAddress={selectedPostingAddress} />}
             <header className={classes.header}>
                 <h1>Browse Jobs</h1>
                 <button onClick={()=>navigate('/jobseeker_dashboard')}>Previous Applications</button>

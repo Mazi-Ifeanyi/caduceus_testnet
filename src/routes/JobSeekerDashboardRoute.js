@@ -21,7 +21,7 @@ const JobSeekerDashboardRoute = () =>{
     const findJobSeekerDashboardHandler = useCallback(async() =>{
         if(!account.isConnected)return;
         const dashAddress = await findJobSeekerDashboard();
-        console.log(dashAddress)
+        console.log('Dash address: ',dashAddress)
         if(dashAddress !== ZERO_ADDRESS && !isNull(dashAddress)){
             setHasDashboard(true);
             setJobSeekerDashAddress(dashAddress);

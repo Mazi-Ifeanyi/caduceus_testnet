@@ -4,7 +4,7 @@ import iJCJobPostingAbi from '../abi/i_jc_job_posting_abi';
 import { getContractFromRegistry } from '../contracts/InitializeContracts';
 import { getContractInstance } from '../contracts/init';
 import { isNull } from '../utils/Util';
-import { getApplyLink } from './LatestJobs';
+import { getApplyLink } from '../contracts/ContractManager';
 
 const ZERO_ADDRESS ='0x0000000000000000000000000000000000000000';
 
@@ -38,15 +38,15 @@ const fetchDataForContract = async(addresses) =>{
     let JOB_DATA = [];
     for(let i = 0; i < addresses.length; i++){
         try{
-            const address = addresses[i];
-            const contractInstance = getContractInstance(address, iJCJobPostingAbi, 'signer');
+            const postingAddress = addresses[i];
+            const contractInstance = getContractInstance(postingAddress, iJCJobPostingAbi, 'signer');
             const jobTitle = await contractInstance.getFeatureSTR("JOB_TITLE");
             const companyName = await contractInstance.getFeatureSTR('COMPANY_NAME');
             const companyLink = await contractInstance.getFeatureSTR('COMPANY_LINK');
             const workType = await contractInstance.getFeatureSTR('JOB_WORK_TYPE');
             const locationType = await contractInstance.getFeatureSTR('JOB_LOCATION_TYPE');
             const postingDateFeatures = await contractInstance.getFeatureUINT('POSTING_DATE_FEATURE');
-            const applyLink = await getApplyLink(address);
+            const applyLink = await getApplyLink(postingAddress);
       JOB_DATA.push({
         jobTitle,
         companyName,
@@ -55,7 +55,7 @@ const fetchDataForContract = async(addresses) =>{
         locationType,
         postingDateFeatures,
         applyLink
-      })
+      });
     }catch(err){}
     }
 

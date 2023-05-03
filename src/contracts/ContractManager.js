@@ -368,7 +368,7 @@ export const getJobDetailUsingPostingddress = async(postingAddress)=>{
     try{
      applyLink = await contractInstance.getFeatureSTR("APPLY_LINK");
     }catch(err){
-      console.log('APPLY LINK ERROR: ', err);
+      // console.log('APPLY LINK ERROR: ', err);
     }
     const skills = await contractInstance.getFeatureSTRARRAY("SKILLS_FEATURE");
     const searchCategory = await contractInstance.getFeatureSTRARRAY("CATEGORY_FEATURE");
@@ -428,7 +428,7 @@ export const findJobSeekerDashboard = async() =>{
         result = await contractInstance.findDashboard("JOBSEEKER_DASHBOARD_TYPE");
        
   }catch(err){
-    console.log('err', err)
+    // console.log('err', err)
   
   }
   
@@ -451,7 +451,7 @@ export const createJobSeekerDashboard = async() =>{
       result = await contractInstance.getDashboard("JOBSEEKER_DASHBOARD_TYPE");
      
 }catch(err){
-  console.log('err', err);
+  // console.log('err', err);
 
 }
 
@@ -461,6 +461,7 @@ export const createJobSeekerDashboard = async() =>{
 
 //This is for jobseeker
 export const getAppliedJobsForUser = async(applicantAddress, jobSeekerDashAddress) =>{
+  console.log('Dash Address; ', jobSeekerDashAddress);
   let result = [];
   try{
     const contractInstance = getContractInstance(jobSeekerDashAddress, iJCJobSeekerDashboardAbi, 'provider');
@@ -577,8 +578,8 @@ const getJobPostingDetails = async(postingAddresses) =>{
             postedDate = new Date(ethers.BigNumber.from(postedDate.toNumber()) * 1000);
             applicantCount = ethers.BigNumber.from(applicantCount).toNumber();
             expiryDate = new Date(ethers.BigNumber.from(expiryDate).toNumber() * 1000);
-            console.log('PostedDate: ', postedDate)
-            console.log('Expiry date: ', expiryDate)
+            // console.log('PostedDate: ', postedDate)
+            // console.log('Expiry date: ', expiryDate)
             JOB_POSTINGS.push({ postedDate, expiryDate, jobTitle, status, applicantCount, options: [option1, option2],  postingAddress })
       }catch(err){}
     }
@@ -874,4 +875,33 @@ export const getPostJobStatus = async(postingAddress) =>{
    }catch(err){}
 
    return false;
+}
+
+export const permissionToViewApplyLink = async(postingAddress) =>{
+  let applyLink='';
+  try{
+      const contractInstance = getContractInstance(postingAddress, iJCJobPostingAbi, 'signer');
+      try{
+          applyLink = await contractInstance.applyForJob();
+          console.log('APPLY LINK: ', applyLink);
+          // applyLink = await sendGetRequest(`${JOBCRYPT_IPFS_URL}${applyLink}`);
+      }catch(err){
+      }
+      
+  }catch(err){}
+    return applyLink;
+}
+
+export const getApplyLink = async(postingAddress) =>{
+  let applyLink='';
+  try{
+      const contractInstance = getContractInstance(postingAddress, iJCJobPostingAbi, 'signer');
+      try{
+          applyLink = await contractInstance.getFeatureSTR('APPLY_LINK');
+          // applyLink = await sendGetRequest(`${JOBCRYPT_IPFS_URL}${applyLink}`);
+      }catch(err){
+      }
+      
+  }catch(err){}
+    return applyLink;
 }

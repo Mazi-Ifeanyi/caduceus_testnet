@@ -124,8 +124,8 @@ const Header2 = () =>{
     const approveHandler = async() =>{
         if(!isApproved){
         const txn = await approveStake();
-        console.log(txn)
-        console.log('hash: ',txn.hash);
+        // console.log(txn)
+        // console.log('hash: ',txn.hash);
         if(!isNull(txn.hash)){
             setIsApproved(true);
         }

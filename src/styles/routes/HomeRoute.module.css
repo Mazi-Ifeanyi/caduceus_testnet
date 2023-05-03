@@ -239,6 +239,15 @@
     text-align: center;
 }
 
+.errorTxt{
+    margin: 0;
+    font-family: 'light';
+    font-size: 20px;
+    width: 100%;
+    text-align: center;
+}
+
+
 .applyBtn{
     width: 100%;
     font-family: 'light';
