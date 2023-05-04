@@ -26,6 +26,7 @@ const ApplyForJobPopup = (props) =>{
         if(isNull(applyLink)){
             setShouldShow(false);
             setStatus({ isVisible: true, text: 'Waiting for you to approve txn...', color: '#956B00' });
+            console.log(selectedPostingAddress);
            const result = await permissionToViewApplyLink(selectedPostingAddress);
            console.log('result???', result)
            if(!isNull(result.hash)){

@@ -1,14 +1,9 @@
 import { useCallback, useContext, useEffect, useReducer, useRef, useState } from 'react';
 import Moment from 'react-moment';
-
+import DOMPurify from 'dompurify';
 
 import classes from '../styles/components/BrowseJobs.module.css';
 import searchIcon from '../assets/search.png';
-import location from '../assets/location.png';
-import calendar from '../assets/calendar.png';
-import box from '../assets/suitcase.png';
-import block from '../assets/cubes.png';
-import dropdown from '../assets/dropdown.png';
 import briefcase from '../assets/briefcase.png';
 import skillIcon from '../assets/skills.png';
 import designIcon from '../assets/categories.png';
@@ -20,14 +15,13 @@ import ApplyForJobPopup from '../popups/ApplyForJobPopup';
 import { isNull } from '../utils/Util';
 import { getProvider } from '../contracts/init';
 import useWindowSize from '../hooks/useWindowSize';
-import { approveStake, getDecimal, getIsStaked, getMinStakeAmount, getStakeErc20Address, getStakedAmount, getSymbol, stake } from '../contracts/ContractManager';
+import { approveStake, getIsStaked, stake } from '../contracts/ContractManager';
 import { getFeaturedJobs } from '../jobManager/FeaturedJobs';
 import { getLatestJobDetails, getLatestJobs } from '../jobManager/LatestJobs';
 import Spinner from './Spinner';
 import Wrapper from './Wrapper';
 import { getPopularJobs } from '../jobManager/PopularJobs';
 import { AccountContext } from '../App';
-import { ethers } from 'ethers';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -525,9 +519,11 @@ const style={
                     </main>
                     <main className={classes.aboutJobDescriptionContainer}>
                         <h1>About</h1>
-                        <p>{jobDetails.companySummary}</p>
-                    <h1>Job Description</h1>
-                    <p className={classes.jobDescription}>{jobDetails.jobDesc}</p>
+                        {/* <p>{jobDetails.companySummary}</p> */}
+                        <p dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(jobDetails.companySummary)}}></p>
+                        <h1>Job Description</h1>
+                        {/* <p className={classes.jobDescription}>{jobDetails.jobDesc}</p> */}
+                        <p dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(jobDetails.jobDesc)}} className={classes.jobDescription}></p>
                     </main>
                     {isStaked &&<div className={classes.applyNowBtnContainer}>
                         <button onClick={openCompanyUrl}>Apply Now</button>

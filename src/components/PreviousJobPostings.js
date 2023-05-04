@@ -32,7 +32,6 @@ const PreviousJobPostings = () =>{
    }
 
    const getJobPostingHandler = useCallback(async() =>{
-    // console.log('clicked and dash address for account is : ', employerDashAddress);
     if(isNull(employerDashAddress))return;
 
     setIsLoading(true);

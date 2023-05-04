@@ -163,7 +163,7 @@ const Header2 = () =>{
         <>
        {width > 1020 && <header className={classes.header}>
              <section className={classes.topHeader}>
-             <p className={classes.versionTxt}>v1.0.7</p>
+             <p className={classes.versionTxt}>v1.0.8</p>
                 <div className={classes.topCenter}>Jobcrypt Blockchain Sustainable Week - UK 2023&nbsp;<strong style={{ textDecoration: 'underline'}}>Learn More</strong></div>
                 <div className={classes.topIconImage}>
                 <img src={linkedin} alt='lkln' onClick={()=>openUrl('https://www.linkedin.com/company/jobcrypt/')} />

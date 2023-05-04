@@ -28,9 +28,9 @@ const ViewJobApplicationDetailRoute = (props) =>{
         const result = await getJobDetailUsingPostingddress(location.state.selectedPostingAddress);
         console.log(result);
         setData({
-            jobTitle: result.jobTitle, locationType: result.locationType, locationSupport: result.locationSupport, workLocation: result.workLocation, companyName: result.workLocation, companyLink: result.companyLink, companySummary: result.companySummary, paymentType: result.paymentType, workType: result.workType, jobDesc: result.jobDesc, searchTerms: result.searchTerms, applyLink: result.applyLink, skills: result.skills, searchCategory: result.searchCategory,postedDate: result.postedDate
+            jobTitle: result.jobTitle, locationType: result.locationType, locationSupport: result.locationSupport, workLocation: result.workLocation, companyName: result.companyName, companyLink: result.companyLink, companySummary: result.companySummary, paymentType: result.paymentType, workType: result.workType, jobDesc: result.jobDesc, searchTerms: result.searchTerms, applyLink: result.applyLink, skills: result.skills, searchCategory: result.searchCategory,postedDate: result.postedDate
         });
-    },[]);
+    },[location.state.selectedPostingAddress]);
 
 
     useEffect(()=>{
@@ -46,11 +46,8 @@ const ViewJobApplicationDetailRoute = (props) =>{
         return '';
     }
 
-    const copyHandler = (event, value) =>{
+    const copyHandler = (value) =>{
         if(!isNull(value)){
-            // console.log(event.clientX)
-            // copyRef.current.style.top = event.clientX - '100vw';
-            // copyRef.current.style.left = event.clientY + '100px';
             navigator.clipboard.writeText(value).then(()=>{
                 setIsCopied(true);
                 const timeout = setTimeout(()=>{

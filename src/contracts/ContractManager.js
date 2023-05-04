@@ -490,17 +490,12 @@ export const getAppliedJobsForUser = async(applicantAddress, jobSeekerDashAddres
         let statusCode = await contractInstance.getStatus();
         const status = resolveStatus(statusCode);
         noOfApplicant = ethers.BigNumber.from(noOfApplicant).toNumber();
-        // console.log('appplicant data: ', applicantData);
         console.log('No of applicant: ', statusCode);
 
         if(!isNull(applicantData)){
-         applicationDate = ethers.BigNumber.from(applicantData.applicationDate).toNumber() * 1000;
+         applicationDate = new Date(ethers.BigNumber.from(applicantData.applicationDate).toNumber() * 1000);
          link = applicantData.link
         }
-        // console.log('job title: ', jobTitle);
-        // console.log('Status: ', statusCode);
-        // noOfApplicant = ethers.BigNumber.from(noOfApplicant).toNumber();
-        // statusCode = ethers.BigNumber.from(statusCode).toNumber();
 
 
         APPLICATION_DATA.push({

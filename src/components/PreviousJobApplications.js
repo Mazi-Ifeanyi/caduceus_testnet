@@ -28,16 +28,14 @@ const PreviousJobApplications = () =>{
 
 
     const getAppliedJobsHandler = useCallback(async()=>{
+        if(isNull(account.address) || isNull(jobSeekerDashAddress))return;
         setIsLoading(true);
         setMessage('Checking for existing job application...');
-        // console.log('jobseeker address: ', jobSeekerDashAddress);
-        // console.log('address; ', account.address)
-        if(isNull(account.address))return;
         const appliedJobs = await getAppliedJobsForUser(account.address, jobSeekerDashAddress);
-        // console.log('APPLIED JOBS: ', appliedJobs);
         setIsLoading(false);
         setAppliedJobsArray(appliedJobs);
         if(isNull(appliedJobs))setMessage('No previous application.');
+
     },[account.isConnected, jobSeekerDashAddress]);
 
 
@@ -47,7 +45,6 @@ const PreviousJobApplications = () =>{
 
 
     const navigateToJobDetailPage = (postingAddress) =>{
-        // setSelectedPostingAddress(postingAddress);
         navigate('/job_application_detail', { state: { selectedPostingAddress: postingAddress }});
     }
 
@@ -70,8 +67,6 @@ const PreviousJobApplications = () =>{
  
      return(
          <section className={classes.tableParent}>
-             {/* {showAction && <ActionPopup clientX={clientXY[0]} clientY={clientXY[1]} setShowAction={setShowAction} />} */}
-             {/* {showJobDetail && <JobListingDetailPopup setShowJobDetail={setShowJobDetail} />} */}
         {width > 770 && <>
          <div className={classes.tableHeader}>
              <span className={classes.postedHeader}>Application Date</span>
