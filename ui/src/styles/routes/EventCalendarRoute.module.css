@@ -1,0 +1,78 @@
+.parent{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    -ms-flex-direction: column;
+    padding: 0px 100px;
+    padding-top: 1rem;
+    padding-bottom: 30px;
+    background-image: linear-gradient(to right, #2c2231, #171d32);
+}
+
+.header{
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    column-gap: 10px;
+    margin-bottom: 10px;
+}
+
+.header>img{
+    width: 17px;
+    height: 17px;
+    filter: invert(1);
+    cursor: pointer;
+}
+
+.header>h1{
+    font-family: 'bold';
+    color: #fff;
+    font-size: 40px;
+    padding-left: 45px;
+    margin: 0;
+}
+
+.main2{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  .main2>div{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  
+  .title{
+      font-family: 'bold';
+      color: #fff;
+      font-size: 40px;
+      margin: 0; 
+  }
+  
+  .cloudContainer{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    column-gap: 5px;
+  }
+  
+  .cloudContainer>p{
+      color: #fff;
+      font-family: 'light';
+      font-size: 20px;
+      cursor: pointer;
+  }
+
+@media screen and (max-width: 770px) {
+    .parent{
+        padding: 0px 10px;
+        padding-top: 5rem;
+    }
+}
